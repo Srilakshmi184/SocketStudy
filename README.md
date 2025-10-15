@@ -59,18 +59,20 @@ Socket programming finds applications in various domains, including web developm
 ## client.py
 ```
 import socket
-from datetime import datetime
 s=socket.socket()
 s.bind(('localhost',8000))
 s.listen(5)
 c,addr=s.accept()
-print("Client Address : ",addr)
-now = datetime.now()
-c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
-ack=c.recv(1024).decode()
-if ack:
-print(ack)
-c.close()
+while True:
+   i=input("Enter a data: ")
+   c.send(i.encode())
+   ack=c.recv(1024).decode()
+   if ack:
+     print(ack)
+     continue
+   else:
+      c.close()
+      break
 ```
 
 ## server.py
@@ -78,12 +80,17 @@ c.close()
 import socket
 s=socket.socket()
 s.connect(('localhost',8000))
-print(s.getsockname())
-print(s.recv(1024).decode())
-s.send("acknowledgement recived from the server".encode())
+while True:
+    print(s.recv(1024).decode())
+    s.send("Acknowledgement Recived".encode())
 ```
 
 ## OUTPUT:
+client.py
+<img width="601" height="285" alt="image" src="https://github.com/user-attachments/assets/5d8586c5-7b6f-46c0-8836-4b31deba8e93" />
+
+server.py
+<img width="752" height="219" alt="image" src="https://github.com/user-attachments/assets/2b1c2b50-9930-4002-b9ba-1d0c78edc725" />
 
 
 ## Result:
